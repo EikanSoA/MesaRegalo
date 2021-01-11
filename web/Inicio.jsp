@@ -25,8 +25,6 @@
 
 </head>
 <body background="fondo.png">
-    
-
 
     <main role="main" class="container">
       <div class="jumbotron">

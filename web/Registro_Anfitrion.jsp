@@ -1,3 +1,4 @@
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -59,7 +60,7 @@
         <h3 class="card-title text-center">Registro Anfitrion</h3>
         <div class="card-text">
             
-            <form>
+            <form action="Registro_Anfitrion.jsp" method="post">
             
                 <div class="form-group">
                     <input type="Nombres" class="form-control" name="Nombres" placeholder="Nombres" required="required">
@@ -85,19 +86,51 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Contraseña" required="required">
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <input type="password" class="form-control" name="confirm_password" placeholder="Confirmar Contraseña" required="required">
-                </div>        
+                </div>   -->    
                 <div class="form-group">
                     <label class="form-check-label"><input type="checkbox" required="required"> Acepto <a href="#">los terminos </a> &amp; <a href="#">condiciones</a></label>
                 </div>
                 <div class="form-group">
                     <a href="loginAnfitrion.html">
-                    <button type="submit" class="btn btn-primary btn-block" >Registrarse</button>
+                    <button type="submit" name="registro" class="btn btn-primary btn-block" >Registrarse</button>
                     </a>
                 </div>
             </form>
         </div>
+        <%
+            if(request.getParameter("registro")!=null){
+                String nombre = request.getParameter("Nombres");
+                String apellidoP = request.getParameter("Apellido Paterno");
+                String apellidoM = request.getParameter("Apellido Materno");
+                String usuario = request.getParameter("usuario");
+                String telefono = request.getParameter("telefono");
+                String email = request.getParameter("email");
+                String direccion = request.getParameter ("Direccion");
+                String contrasena = request.getParameter("password");
+            
+            try{
+                Connection con = null;
+                Statement st = null;
+                String url = "jdbc:sqlserver://localhost:1433;"
+                        +"database=dbMesaRegalo;"
+                        +"user= Lega;"
+                        +"password;"
+                        +"loginTimeout=30;";
+                
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                con = DriverManager.getConnection(url);
+                st = con.createStatement();
+                st.executeUpdate("insert into tbanfitrion "
+                        + "(nom_anfitrion, apeP_anfitrion, apeM_anfitrion, dir_anfitrion, correo_anfitrion, tel_anfitrion, contrasena)"
+                        + "values(' "+nombre+" ',' "+apellidoP+" ',' "+apellidoM+" ',' "+usuario+" ',' "+telefono+" ',' "+email+" ',' "+direccion+" ',' "+contrasena+"');");
+                request.getRequestDispatcher("Inicio.jsp").forward(request, response);
+            }catch (Exception e){
+                out.print(e);
+            }
+            }
+                %>
     </div>
 </div>
 </div>
