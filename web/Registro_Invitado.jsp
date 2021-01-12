@@ -1,9 +1,5 @@
 <%@page import="java.sql.*"%>
-<%-- 
-    Document   : Registro_Invitado
-    Created on : 9/01/2021, 07:52:47 PM
-    Author     : Lega
---%>
+
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -99,35 +95,23 @@
                 </div>
             </form>
         </div
-        <%
+         <%
             if(request.getParameter("registro")!=null){
                 String nombre = request.getParameter("Nombres");
                 String apellidoP = request.getParameter("Apellido Paterno");
                 String apellidoM = request.getParameter("Apellido Materno");
-                String usuario = request.getParameter("usuario");
                 String telefono = request.getParameter("telefono");
                 String email = request.getParameter("email");
+                String direccion = request.getParameter ("Direccion");
                 String contrasena = request.getParameter("password");
             
-            try{
-                Connection con = null;
-                Statement st = null;
-                String url = "jdbc:sqlserver://localhost:1433;"
-                        +"database=dbMesaRegalo;"
-                        +"user=Lega;"
-                        +"password;"
-                        +"loginTimeout=30;";
+                Conexion.ConexionBD conexion = new Conexion.ConexionBD();
+                Statement st = conexion.Con();
                 
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                con = DriverManager.getConnection(url);
-                st = con.createStatement();
-                st.executeUpdate("insert into tbanfitrion "
-                        + "(nom_anfitrion, apeP_anfitrion, apeM_anfitrion, dir_anfitrion, correo_anfitrion, tel_anfitrion, contrasena)"
-                        + "values(' "+nombre+" ',' "+apellidoP+" ',' "+apellidoM+" ',' "+usuario+" ',' "+telefono+" ',' "+email+" ',' "+contrasena+"');");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }catch (Exception e){
-                out.print(e);
-            }
+                st.executeUpdate("insert into tbInvitado"
+                        + "(nom_invitado, apeP_invitado, apeM_invitado, dir_invitado, correo_invitado, tel_invitado, contrasena)"
+                        + "values(' "+nombre+" ',' "+apellidoP+" ',' "+apellidoM+" ',' "+direccion+" ',' "+email+" ',' "+telefono+" ',' "+contrasena+"');");
+                request.getRequestDispatcher("Inicio.jsp").forward(request, response);
             }
                 %>
     </div>

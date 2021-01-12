@@ -73,9 +73,9 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col"><input type="usuario" class="form-control" name="usuario" placeholder="Usuario" required="required"></div>
+                        <!--<div class="col"><input type="usuario" class="form-control" name="usuario" placeholder="Usuario" required="required"></div>-->
                         <div class="col"><input type="telefono" class="form-control" name="telefono" placeholder="Telefono" required="required"></div>
-                    </div>          
+                    </div>         
                 </div>
                 <div class="form-group">
                     <input type="email" class="form-control" name="email" placeholder="Email" required="required">
@@ -104,31 +104,18 @@
                 String nombre = request.getParameter("Nombres");
                 String apellidoP = request.getParameter("Apellido Paterno");
                 String apellidoM = request.getParameter("Apellido Materno");
-                String usuario = request.getParameter("usuario");
                 String telefono = request.getParameter("telefono");
                 String email = request.getParameter("email");
                 String direccion = request.getParameter ("Direccion");
                 String contrasena = request.getParameter("password");
             
-            try{
-                Connection con = null;
-                Statement st = null;
-                String url = "jdbc:sqlserver://localhost:1433;"
-                        +"database=dbMesaRegalo;"
-                        +"user= Lega;"
-                        +"password;"
-                        +"loginTimeout=30;";
+                Conexion.ConexionBD conexion = new Conexion.ConexionBD();
+                Statement st = conexion.Con();
                 
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                con = DriverManager.getConnection(url);
-                st = con.createStatement();
-                st.executeUpdate("insert into tbanfitrion "
+                st.executeUpdate("insert into tbAnfitrion"
                         + "(nom_anfitrion, apeP_anfitrion, apeM_anfitrion, dir_anfitrion, correo_anfitrion, tel_anfitrion, contrasena)"
-                        + "values(' "+nombre+" ',' "+apellidoP+" ',' "+apellidoM+" ',' "+usuario+" ',' "+telefono+" ',' "+email+" ',' "+direccion+" ',' "+contrasena+"');");
+                        + "values(' "+nombre+" ',' "+apellidoP+" ',' "+apellidoM+" ',' "+direccion+" ',' "+email+" ',' "+telefono+" ',' "+contrasena+"');");
                 request.getRequestDispatcher("Inicio.jsp").forward(request, response);
-            }catch (Exception e){
-                out.print(e);
-            }
             }
                 %>
     </div>
